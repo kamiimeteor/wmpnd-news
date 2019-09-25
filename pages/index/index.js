@@ -1,54 +1,109 @@
-//index.js
-//获取应用实例
-const app = getApp()
+import util from '../../utils/util'
+
+const types = [
+  {
+    id: 0,
+    type: 'gn',
+    name: '国内'
+  },
+  {
+    id: 1,
+    type: 'gj',
+    name: '国际'
+  },
+  {
+    id: 2,
+    type: 'cj',
+    name: '财经'
+  },
+  {
+    id: 3,
+    type: 'yl',
+    name: '娱乐'
+  },
+  {
+    id: 4,
+    type: 'js',
+    name: '军事'
+  },
+  {
+    id: 5,
+    type: 'ty',
+    name: '体育'
+  },
+  {
+    id: 6,
+    type: 'other',
+    name: '其他'
+  }
+]
+
 
 Page({
+
+  /**
+   * 页面的初始数据
+   */
   data: {
-    motto: 'Hello World',
-    userInfo: {},
-    hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    types,
+    typeItemId: 0,
+    newsList: []
   },
-  //事件处理函数
-  bindViewTap: function() {
-    wx.navigateTo({
-      url: '../logs/logs'
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    this.getAllArticles()
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+    this.getAllArticles(() => {
+      wx.stopPullDownRefresh()
     })
   },
-  onLoad: function () {
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
-    } else if (this.data.canIUse){
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-      }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          })
+
+  getAllArticles(callback) {
+    wx.request({
+      url: 'https://test-miniprogram.com/api/news/list',
+      data: {
+        type: types[this.data.typeItemId].type
+      },
+      success: res => {
+        let result = res.data.result
+        console.log(result)
+        for (let i in result) {
+          let datetime = new Date(result[i].date)
+          result[i].source += '   '
+          result[i].time = util.formatTime(datetime)
+          if (!result[i].firstImage) {
+            result[i].firstImage = '/images/default-firstImage.jpg'
+          }
         }
-      })
-    }
+        this.setData({
+          newsList: result
+        })
+      },
+      complete: () => {
+        typeof callback === 'function' && callback();
+      }
+    })
   },
-  getUserInfo: function(e) {
-    console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
+  onTapTypeChoose(source) {
+    console.log(source)
+    let typeItemId = source.currentTarget.dataset.id
     this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
+      typeItemId
+    })
+    this.getAllArticles()
+  },
+  onTapNews(source) {
+    let id = source.currentTarget.dataset.id
+    wx.navigateTo({
+      url: `/pages/content/content?id=${id}`,
     })
   }
 })

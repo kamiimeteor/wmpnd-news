@@ -1,13 +1,14 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/logs/logs"
+    "pages/content/content"
   ],
   "window": {
+    "navigationStyle": "custom",
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle": "black"
+    "navigationBarBackgroundColor": "linear-gradient(#4CAAE7, #4193D1)",
+    "navigationBarTitleText": "快读•资讯",
+    "navigationBarTextStyle": "white"
   },
   "sitemapLocation": "sitemap.json"
 }

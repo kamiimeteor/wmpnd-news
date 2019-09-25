@@ -1,21 +1,131 @@
-/**index.wxss**/
-.userinfo {
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 99;
+}
+
+.navigationBar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 160rpx;
+  background-color: #3ba0df;
+  color: white;
+  padding-top: 30rpx;
+}
+
+.navigationBar image {
+  height: 60rpx;
+  width: 60rpx;
+  margin: 80rpx 18rpx 24rpx 24rpx;
+}
+
+.title {
+  font-size: 30rpx;
+  font-weight: bold;
+  margin-top: 56rpx;
+}
+
+.types {
+  display: flex;
+  align-items: center;
+  padding: 12rpx;
+  background-color: #3ba0df;
+  color: white;
+}
+
+.type-item {
+  flex-grow: 1;
+  text-align: center;
+  font-size: 30rpx;
+  line-height: 42rpx;
+}
+
+.type-item.chosen {
+  font-size: 36rpx;
+  line-height: 48rpx;
+  font-weight: bold;
+}
+
+.type-item.chosen .tip {
+  border-bottom: 4rpx solid rgba(255, 255, 255, 0.8);
+  height: 3rpx;
+  width: 24%;
+  margin: 2rpx auto;
+}
+
+.news {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 0 20rpx;
+  margin-top: 290rpx;
 }
 
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
+.new-list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  padding: 30rpx 0;
+  border-bottom: 2rpx solid rgba(0, 0, 0, 0.1);
+}
+.new-list:last-child {
+  border: none;
 }
 
-.userinfo-nickname {
-  color: #aaa;
+.new-list .image {
+  width: auto;
+  height: auto;
 }
 
-.usermotto {
-  margin-top: 200px;
+.new-list:first-child .image {
+  max-height: 330rpx; /* 限制最大高度 */
+  overflow: hidden; /* 限制最大高度 */
+}
+
+.new-list .image image {
+  width: 200rpx;
+  height: auto;
+}
+
+.new-list .text {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  padding-right: 3rpx;
+}
+
+.new-list .title {
+  font-size: 35rpx;
+  line-height: 49rpx;
+}
+
+.new-list .text .note {
+  text-align: left;
+  font-size: 30rpx;
+  line-height: 42rpx;
+  opacity: 0.7;
+}
+
+.new-list:first-child {
+  display: block;
+  position: relative;
+}
+
+.new-list:first-child image {
+  width: 100%;
+}
+
+.new-list:first-child .text {
+  position: absolute;
+  bottom: 45rpx;
+  left: 20rpx;
+  color: white;
+}
+
+.new-list:first-child .text .note {
+  opacity: 0.8;
 }
